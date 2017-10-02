@@ -16,15 +16,20 @@ import java.util.Scanner;
  * Created by Other on 6/30/2017.
  */
 public class FileManagement {
+    ;
+    private static final String userHome = System.getProperty("user.home");
+    public static final String configDirectory = userHome+"/.passwordlocker/";
+    public static final String configFile = configDirectory+"locker.ini";
 
     /**
      * Returns a Locker object if the provided file in the path is an encrypted, serialized Locker and the password
-     * will sucessfully decrypt the file.
+     * will successfully decrypt the file.
      * @param path the file to be decrypted.
      * @param key the user-provided key to decrypt the file.
-     * @return
+     * @return A Locker object.
      */
-    public static Locker openLockerFile(String path, String key) throws ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException {
+    public static Locker openLockerFile(String path, String key) throws
+            ClassNotFoundException, BadPaddingException, IllegalBlockSizeException, IOException {
         Cipher cipher = Crypto.getCipherDecrypt(key);
         SealedObject obj = readFile(path, key);
 
@@ -64,32 +69,42 @@ public class FileManagement {
         }
     }
 
+    /**
+     * Calls firstRun() to determine if the configuration file exists, then attempts to
+     * read locker.ini for Lockers recently used.
+     * @return List containing Strings with the directory of any Lockers.
+     */
     public static List<String> readStartup(){
         List<String> lockerList = new ArrayList<>();
-        // TODO: 10/2/2017 Make dynamic
-        final String userHomeStart = System.getProperty("user.home");
-        final String configPath = userHomeStart+"/AppData/Local/PasswordLocker/locker.ini";
-        File f = new File(configPath);
-        if (!f.exists()){
-            try {
-                f.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            firstRun();
+            Scanner input = new Scanner(new File(configFile));
+            while (input.hasNext()){
+                lockerList.add(input.nextLine());
             }
+            return lockerList;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else{
-            try {
-                Scanner input = new Scanner(f);
-                while (input.hasNext()){
-                    lockerList.add(input.nextLine());
-                }
-                return lockerList;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-    }
-    return lockerList;
+        return lockerList;
 }
+
+    /**
+     * Determines if the configuration directory and configuration file have been created.
+     * If not, they are created.
+     * @throws IOException
+     */
+    private static void firstRun() throws IOException {
+
+        File dir = new File(configDirectory);
+        File config = new File(configFile);
+        if (!dir.exists())
+            new File(configDirectory).mkdir();
+        if (!config.exists())
+            config.createNewFile();
+    }
 
 
 }

@@ -45,6 +45,8 @@ public class testClient {
         System.out.println(l2.getPasswords().get(4));
 
 
-        System.out.println(System.getProperty("user.home"));
+        System.out.println(FileManagement.configDirectory);
+        System.out.println(FileManagement.configFile);
+
     }
 }
