@@ -58,8 +58,7 @@ public class FileManagement {
         return sealedObject;
     }
 
-    public static void writeFile(Locker locker, String path, String key) {
-        try {
+    public static void writeFile(Locker locker, String path, String key) throws IOException, IllegalBlockSizeException {
             Cipher cipher = Crypto.getCipherEncrypt(key);
             SealedObject sealedObject = new SealedObject(locker, cipher );
 
@@ -73,11 +72,6 @@ public class FileManagement {
             os.flush(); os.close();
             cos.flush(); cos.close();
             fos.flush(); fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -118,7 +112,7 @@ public class FileManagement {
     }
 
     public static void addLockerList(String path){
-        File config = new File(configFile);
+        File config = new File(configFile+"\n");
         if (config.exists()){
             try {
                 Files.write(Paths.get(configFile), path.getBytes(), StandardOpenOption.APPEND);

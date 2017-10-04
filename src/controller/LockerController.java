@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import core.Main;
 
+import javax.crypto.IllegalBlockSizeException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -224,12 +226,18 @@ public class LockerController {
 
 
     private void saveFile(){
+        Locker locker   =  Context.getInstance().getLocker();
+        String path     =  Context.getInstance().getFilePath();
+        String key      =  Context.getInstance().getLockerKey();
 
-        FileManagement.writeFile(
-                Context.getInstance().getLocker(),
-                Context.getInstance().getFilePath(),
-                Context.getInstance().getLockerKey()
-        );
+        try {
+            FileManagement.writeFile(locker, path , key);
+
+        } catch (IOException e) {
+           lockerSaveError(path);
+        } catch (IllegalBlockSizeException e) {
+            lockerSaveError(path);
+        }
     }
 
     @FXML
@@ -247,6 +255,7 @@ public class LockerController {
         noteArea.clear();
         openLocker.setValue(false);
         saveFile();
+        Context.getInstance().clearContext();
         mainApp.showRecentLocker();
     }
 
@@ -301,6 +310,14 @@ public class LockerController {
         alert.setContentText("There was an error opening the specified locker.\n" +
                 "Either the specified file is not a locker or the provided key is incorrect.");
         alert.showAndWait();
+    }
+
+    @FXML
+    private void lockerSaveError(String path){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Password Locker");
+        alert.setHeaderText("There was an error.");
+        alert.setContentText("The Locker could not be written to disk at: " + path);
     }
 
     /*

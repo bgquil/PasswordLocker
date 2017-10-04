@@ -33,31 +33,15 @@ public class RecentLockerController {
     private void initialize(){
         initRecentLockerListView();
 
-
-
     }
-
 
     private void initRecentLockerListView() {
         List<String> lockerList = FileManagement.readStartup();
         recentLockerList.setItems(FXCollections.observableArrayList(lockerList));
     }
 
-    private void listCheck(){
-        for (int i = 0; i < recentLockerList.getItems().size(); i++){
-            if (!fileExists(recentLockerList.getItems().get(i))){
 
-            }
 
-        }
-    }
-
-    private boolean fileExists(String path){
-        File f = new File(path);
-        if (f.exists())
-            return true;
-        return false;
-    }
 
 
     @FXML
@@ -67,7 +51,7 @@ public class RecentLockerController {
             lockerPath = recentLockerList.getSelectionModel().getSelectedItem().toString();
         }
 
-        if (!lockerPath.equals(null) && fileExists(lockerPath)) {
+        if (!lockerPath.equals(null) && new File(lockerPath).exists()) {
             Context.getInstance().setFilePath(lockerPath);
             if (readFile(lockerPath))
                 mainApp.initLockerView();
@@ -75,6 +59,7 @@ public class RecentLockerController {
             fileReadError();
         }
     }
+
 
 
     /**
@@ -108,8 +93,10 @@ public class RecentLockerController {
 
     @FXML
     private void handleCreateLocker(){
-
         mainApp.showNewLockerDialog();
+        initialize();
+//        recentLockerList.getSelectionModel().selectLast();
+//        handleOpenLocker();
 
     }
 

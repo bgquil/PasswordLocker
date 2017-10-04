@@ -12,7 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.crypto.IllegalBlockSizeException;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Other on 7/17/2017.
@@ -65,12 +67,27 @@ public class NewLockerDialogController {
             emptyFieldError();
         else{
             Locker defaultLocker = new Locker(true);
-            FileManagement.writeFile(defaultLocker, path, pw);
-            FileManagement.addLockerList(path);
+            try {
+                // Write locker and add it to recent locker list.
+                FileManagement.writeFile(defaultLocker, path, pw);
+                FileManagement.addLockerList(path);
+                // TODO: 10/4/2017 Error on bad path. 
+                lockerCreationInformation(path);
+            } catch (IOException e) {
+                lockerCreationError(path);
+            } catch (IllegalBlockSizeException e) {
+                lockerCreationInformation(path);
+            }
+
+            handleCancelDialog();
 
         }
 
     }
+
+
+
+
     @FXML
     private void handleCancelDialog(){
         this.dialogStage.close();
@@ -89,7 +106,7 @@ public class NewLockerDialogController {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Password Locker - Error");
         alert.setHeaderText("Empty Fields");
-        alert.setContentText("The service, username, and password fields may not be empty");
+        alert.setContentText("The location, password, and password confirmation field may not be empty.");
         alert.showAndWait();
     }
 
@@ -100,6 +117,23 @@ public class NewLockerDialogController {
         alert.setHeaderText("The provided passwords do not match.");
         alert.setContentText("The password field and password confirmation field must be the same.");
         alert.showAndWait();
+    }
+
+    @FXML
+    private void lockerCreationInformation(String path){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Password Locker");
+        alert.setHeaderText("A new Locker has been created.");
+        alert.setContentText("New Locker location: " + path);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void lockerCreationError(String path){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Password Locker");
+        alert.setHeaderText("There was an error.");
+        alert.setContentText("A Locker could not be created at: " + path);
     }
 
 }

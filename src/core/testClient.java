@@ -25,8 +25,14 @@ public class testClient {
             l.addPassword(new Password("BOA", "u","pw123","business", true));
 
             System.out.println(l.getPasswords().get(0).getGenerationDate());
+        try {
             FileManagement.writeFile(l, "testLocker2.bin", "abc");
-            System.out.println("=====Reading====");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        System.out.println("=====Reading====");
 
         try {
             l2 = FileManagement.openLockerFile("testLocker2.bin", "abc");

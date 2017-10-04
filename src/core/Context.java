@@ -49,4 +49,11 @@ public class Context {
     public void setRecentLockers(String[] a){
         this.recentLockers = a;
     }
+
+    public void clearContext(){
+        this.locker = null;
+        this.lockerKey = null;
+        this.filePath = null;
+        this.recentLockers = null;
+    }
 }
