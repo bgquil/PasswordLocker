@@ -108,7 +108,6 @@ public class RecentLockerController {
 
     @FXML
     private void handleCreateLocker(){
-        System.out.println("abc");
 
         mainApp.showNewLockerDialog();
 
@@ -120,6 +119,10 @@ public class RecentLockerController {
     }
 
 
+
+    /*
+    Begin Error Dialogs
+     */
 
     @FXML
     private void fileReadError() {

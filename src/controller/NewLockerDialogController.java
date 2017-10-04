@@ -1,6 +1,8 @@
 package controller;
 
 import core.Context;
+import core.FileManagement;
+import core.Locker;
 import core.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -42,17 +44,31 @@ public class NewLockerDialogController {
     private void handleOpenFile(){
         FileChooser f = new FileChooser();
         f.setTitle("Open Locker");
-
+        String extension = ".lok";
         File file = f.showSaveDialog(new Stage());
         if (file != null){
-            //fileName.setText(file.getAbsolutePath());
-//            readFile(file.getAbsolutePath());
-            locField.setText(file.getAbsolutePath());
+
+            locField.setText(file.getAbsolutePath()+extension);
         }
     }
 
     @FXML
     private void handleCreateLocker(){
+        String path = locField.getText();
+        String pw = pwField.getText();
+        String pwConfirm = pwConfirmField.getText();
+
+        if (!pw.equals(pwConfirm)){
+            pwMatchError();
+        }
+        else if (pwField.getText().isEmpty() || pwConfirmField.getText().isEmpty() || locField.getText().isEmpty())
+            emptyFieldError();
+        else{
+            Locker defaultLocker = new Locker(true);
+            FileManagement.writeFile(defaultLocker, path, pw);
+            FileManagement.addLockerList(path);
+
+        }
 
     }
     @FXML
@@ -61,13 +77,28 @@ public class NewLockerDialogController {
 
     }
 
+   /*
+   *
+   * Begin Error Dialogs
+   *
+   *
+    */
+
     @FXML
     private void emptyFieldError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Password Locker - Error");
         alert.setHeaderText("Empty Fields");
         alert.setContentText("The service, username, and password fields may not be empty");
+        alert.showAndWait();
+    }
 
+    @FXML
+    private void pwMatchError(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Password Locker - Error");
+        alert.setHeaderText("The provided passwords do not match.");
+        alert.setContentText("The password field and password confirmation field must be the same.");
         alert.showAndWait();
     }
 

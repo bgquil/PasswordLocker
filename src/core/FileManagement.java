@@ -4,6 +4,9 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 
 import javax.crypto.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -16,10 +19,10 @@ import java.util.Scanner;
  * Created by Other on 6/30/2017.
  */
 public class FileManagement {
-    ;
+
     private static final String userHome = System.getProperty("user.home");
     public static final String configDirectory = userHome+"/.passwordlocker/";
-    public static final String configFile = configDirectory+"locker.ini";
+    public static final String configFile = configDirectory+"locker.config";
 
     /**
      * Returns a Locker object if the provided file in the path is an encrypted, serialized Locker and the password
@@ -38,6 +41,14 @@ public class FileManagement {
 
     }
 
+    /**
+     * Attemps to create a SealedObject, assuming it contains a Locker object, from the given file with the given key.
+     * @param path - the path of the provided .lok file
+     * @param key - the provided user password for a given locker.
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private static SealedObject readFile(String path, String key) throws IOException, ClassNotFoundException {
         Cipher cipher = Crypto.getCipherDecrypt(key);
         CipherInputStream cis = new CipherInputStream(new FileInputStream(path), cipher);
@@ -71,7 +82,7 @@ public class FileManagement {
 
     /**
      * Calls firstRun() to determine if the configuration file exists, then attempts to
-     * read locker.ini for Lockers recently used.
+     * read locker.config for Lockers recently used.
      * @return List containing Strings with the directory of any Lockers.
      */
     public static List<String> readStartup(){
@@ -104,6 +115,18 @@ public class FileManagement {
             new File(configDirectory).mkdir();
         if (!config.exists())
             config.createNewFile();
+    }
+
+    public static void addLockerList(String path){
+        File config = new File(configFile);
+        if (config.exists()){
+            try {
+                Files.write(Paths.get(configFile), path.getBytes(), StandardOpenOption.APPEND);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 

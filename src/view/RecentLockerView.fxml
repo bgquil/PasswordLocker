@@ -9,7 +9,7 @@
    <children>
       <ListView fx:id="recentLockerList" layoutX="47.0" layoutY="100.0" prefHeight="200.0" prefWidth="419.0" />
       <Button layoutX="481.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleOpenLocker" text="Open Locker" />
-      <Button layoutX="465.0" layoutY="347.0" mnemonicParsing="false" text="Create New Locker" />
+      <Button layoutX="465.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleCreateLocker" text="Create New Locker" />
       <Button layoutX="36.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
       <Label layoutX="256.0" layoutY="35.0" text="Password Locker" />
       <Label layoutX="54.0" layoutY="69.0" text="Recent Lockers" />

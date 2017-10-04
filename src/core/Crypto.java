@@ -16,10 +16,14 @@ import java.util.Arrays;
  */
 
 public class Crypto {
-    // TODO: 7/4/2017 ECB insecure
     private static final String CIPHERSPEC = "AES/ECB/PKCS5Padding";
 
 
+    /**
+     * Returns a Cipher object in decrypt mode with the provided password.
+     * @param pw The plaintext password used for encrypting/decrypting a Locker object.
+     * @return Cipher
+     */
     public static Cipher getCipherDecrypt(String pw){
         try {
             final Cipher usedCipher = Cipher.getInstance(CIPHERSPEC);
@@ -35,6 +39,11 @@ public class Crypto {
         return null;
     }
 
+    /**
+     * Returns a Cipher object in encrypt mode with the provided password.
+     * @param pw The plaintext password used for encrypting/decrypting a Locker object.
+     * @return Cipher
+     */
     public static Cipher getCipherEncrypt(String pw){
         try {
             final Cipher usedCipher = Cipher.getInstance(CIPHERSPEC);
@@ -50,11 +59,14 @@ public class Crypto {
         return null;
     }
 
-
-
-    private static SecretKeySpec generateKeySpec(String inKey){
+    /**
+     * Used to generate a SecretKeySpec needed to initialize a Cipher.
+     * @param pw
+     * @return
+     */
+    private static SecretKeySpec generateKeySpec(String pw){
         try {
-            byte[] key = inKey.getBytes("UTF-8");
+            byte[] key = pw.getBytes("UTF-8");
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16); // use first 128 bits

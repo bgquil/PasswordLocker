@@ -95,7 +95,6 @@ public class Main extends Application {
 
 
     public void showNewPasswordDialog(){
-
         try {
 
             FXMLLoader loader = new FXMLLoader();
