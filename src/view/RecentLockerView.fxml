@@ -14,5 +14,6 @@
       <Label layoutX="256.0" layoutY="35.0" text="Password Locker" />
       <Label layoutX="54.0" layoutY="69.0" text="Recent Lockers" />
       <Button layoutX="478.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleImportLocker" text="Import Locker" />
+      <Button layoutX="208.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleRemoveLocker" text="Remove Locker" />
    </children>
 </AnchorPane>

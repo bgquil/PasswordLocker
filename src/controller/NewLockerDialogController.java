@@ -70,7 +70,7 @@ public class NewLockerDialogController {
             try {
                 // Write locker and add it to recent locker list.
                 FileManagement.writeFile(defaultLocker, path, pw);
-                FileManagement.addLockerList(path);
+                Context.getInstance().getRecentLockers().add(FileManagement.pathFix(path));
                 // TODO: 10/4/2017 Error on bad path. 
                 lockerCreationInformation(path);
             } catch (IOException e) {

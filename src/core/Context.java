@@ -4,6 +4,9 @@ package core;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Other on 6/30/2017.
@@ -13,7 +16,7 @@ public class Context {
     private Locker locker;
     private String lockerKey;
     private String filePath;
-    private String[] recentLockers = new String[5];
+    private List<String> recentLockers;
 
     private BooleanProperty openLocker = new SimpleBooleanProperty(false);
 
@@ -42,13 +45,12 @@ public class Context {
 
     public void setFilePath(String path){ this.filePath = path;}
 
-    public String[] getRecentLockers(){
+    public List<String> getRecentLockers(){
         return this.recentLockers;
     }
 
-    public void setRecentLockers(String[] a){
-        this.recentLockers = a;
-    }
+
+    public void setRecentLockers(List<String> list){ this.recentLockers = list;}
 
     public void clearContext(){
         this.locker = null;

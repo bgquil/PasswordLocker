@@ -3,14 +3,15 @@ package controller;
 import core.Context;
 import core.FileManagement;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import core.Main;
-import javafx.scene.control.TextInputDialog;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,6 @@ public class RecentLockerController {
     private ListView<String> recentLockerList;
 
 
-
-
     @FXML
     private void initialize(){
         initRecentLockerListView();
@@ -38,11 +37,17 @@ public class RecentLockerController {
     private void initRecentLockerListView() {
         List<String> lockerList = FileManagement.readStartup();
         recentLockerList.setItems(FXCollections.observableArrayList(lockerList));
+        Context.getInstance().setRecentLockers(lockerList);
     }
 
-
-
-
+    private void applyRecentLockerListChanges(){
+        try {
+            FileManagement.writeLockerList(Context.getInstance().getRecentLockers());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        initialize();
+    }
 
     @FXML
     private void handleOpenLocker() {
@@ -52,7 +57,7 @@ public class RecentLockerController {
         }
 
         if (!lockerPath.equals(null) && new File(lockerPath).exists()) {
-            Context.getInstance().setFilePath(lockerPath);
+            Context.getInstance().setFilePath(lockerPath); // write new locker to recent lockers
             if (readFile(lockerPath))
                 mainApp.initLockerView();
         } else {
@@ -94,14 +99,53 @@ public class RecentLockerController {
     @FXML
     private void handleCreateLocker(){
         mainApp.showNewLockerDialog();
+        //reinitialize RecentLockerController to update recent list.
+        applyRecentLockerListChanges();
         initialize();
-//        recentLockerList.getSelectionModel().selectLast();
+//        RECENT_LOCKER_LIST_PATH.getSelectionModel().selectLast();
 //        handleOpenLocker();
 
     }
 
     @FXML
     private void handleImportLocker(){
+        FileChooser f = new FileChooser();
+        f.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                        "Locker File", "*.lok"));
+        f.setTitle("Add Existing Locker");
+        File file = f.showOpenDialog(new Stage());
+
+        if (file.exists()){
+            System.out.println("exists");
+            System.out.println(file.getAbsolutePath());
+            Context.getInstance().getRecentLockers().add(
+                    FileManagement.pathFix(file.getAbsolutePath()));
+            applyRecentLockerListChanges();
+        }
+    }
+
+    @FXML
+    private void handleRemoveLocker(){
+        if (!recentLockerList.getSelectionModel().isEmpty()) {
+            int lockerListIndex = recentLockerList.getSelectionModel().getSelectedIndex();
+            String lockerPath = recentLockerList.getSelectionModel().getSelectedItem();
+
+            Alert removeAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            removeAlert.setTitle("Removal Confirmation");
+            removeAlert.setHeaderText("Remove a locker");
+            removeAlert.setContentText("Would you like to remove the locker at: \n"
+                    + lockerPath);
+
+            Optional<ButtonType> result = removeAlert.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                Context.getInstance().getRecentLockers().remove(lockerListIndex);
+                applyRecentLockerListChanges();
+            } else {
+                removeAlert.close();
+            }
+        }
+
 
     }
 

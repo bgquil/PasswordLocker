@@ -6,7 +6,9 @@ import javafx.scene.control.TextInputDialog;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Other on 6/30/2017.
@@ -14,17 +16,37 @@ import java.util.Arrays;
 public class testClient {
 
     public static void main(String[] args){
+        List<String> l = new ArrayList<>();
+        l.add("C:/Users/Other/Desktop/testLocker/testLocker2.bin");
+        l.add("C:/Users/Other/Desktop/testLocker/testLocker3.bin");
+        l.add("C:/Users/Other/Desktop/testLocker/testLocker123.bin");
+
+        try {
+            FileManagement.writeLockerList(l);
+
+            List<String> readList = FileManagement.readLockerList();
+            System.out.println(readList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static void lockerTest(){
         Locker l = new Locker(true);
 
         Locker l2 = null;
 
-            l.addPassword(new Password("amazon", "u","pw123","business",true));
-            l.addPassword(new Password("Twitter", "u","pw123","business", true));
-            l.addPassword(new Password("Twitter", "u","pw123","business", true));
-            l.addPassword(new Password("TEST", "u","pw123","business", true));
-            l.addPassword(new Password("BOA", "u","pw123","business", true));
+        l.addPassword(new Password("amazon", "u","pw123","business",true));
+        l.addPassword(new Password("Twitter", "u","pw123","business", true));
+        l.addPassword(new Password("Twitter", "u","pw123","business", true));
+        l.addPassword(new Password("TEST", "u","pw123","business", true));
+        l.addPassword(new Password("BOA", "u","pw123","business", true));
 
-            System.out.println(l.getPasswords().get(0).getGenerationDate());
+        System.out.println(l.getPasswords().get(0).getGenerationDate());
         try {
             FileManagement.writeFile(l, "testLocker2.bin", "abc");
         } catch (IOException e) {
@@ -53,6 +75,5 @@ public class testClient {
 
         System.out.println(FileManagement.configDirectory);
         System.out.println(FileManagement.configFile);
-
     }
 }

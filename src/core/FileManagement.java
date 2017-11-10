@@ -1,17 +1,11 @@
 package core;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import javax.crypto.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +17,7 @@ public class FileManagement {
     private static final String userHome = System.getProperty("user.home");
     public static final String configDirectory = userHome+"/.passwordlocker/";
     public static final String configFile = configDirectory+"locker.config";
+    public static final String RECENT_LOCKER_LIST_PATH = configDirectory+"lockers";
 
     /**
      * Returns a Locker object if the provided file in the path is an encrypted, serialized Locker and the password
@@ -37,7 +32,6 @@ public class FileManagement {
         SealedObject obj = readFile(path, key);
 
         return (Locker) obj.getObject(cipher);
-
 
     }
 
@@ -58,6 +52,14 @@ public class FileManagement {
         return sealedObject;
     }
 
+    /**
+     * Writes a SealedObject to disk.
+     * @param locker the Locker object to write
+     * @param path location to write to
+     * @param key encryption/decryption key provided by use.
+     * @throws IOException
+     * @throws IllegalBlockSizeException
+     */
     public static void writeFile(Locker locker, String path, String key) throws IOException, IllegalBlockSizeException {
             Cipher cipher = Crypto.getCipherEncrypt(key);
             SealedObject sealedObject = new SealedObject(locker, cipher );
@@ -80,20 +82,17 @@ public class FileManagement {
      * @return List containing Strings with the directory of any Lockers.
      */
     public static List<String> readStartup(){
-        List<String> lockerList = new ArrayList<>();
         try {
-            firstRun();
-            Scanner input = new Scanner(new File(configFile));
-            while (input.hasNext()){
-                lockerList.add(input.nextLine());
-            }
-            return lockerList;
+            firstRun(); // check if config and recent locker list exists
+            return readLockerList();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e){
+
         }
-        return lockerList;
+        return new ArrayList<String>();
 }
 
     /**
@@ -102,25 +101,62 @@ public class FileManagement {
      * @throws IOException
      */
     private static void firstRun() throws IOException {
-
         File dir = new File(configDirectory);
         File config = new File(configFile);
+        File recentLockers = new File(RECENT_LOCKER_LIST_PATH);
         if (!dir.exists())
             new File(configDirectory).mkdir();
-        if (!config.exists())
+        if (!config.exists()) {
             config.createNewFile();
+            recentLockers.createNewFile();
+        }
     }
 
-    public static void addLockerList(String path){
-        File config = new File(configFile+"\n");
-        if (config.exists()){
-            try {
-                Files.write(Paths.get(configFile), path.getBytes(), StandardOpenOption.APPEND);
-            }catch (IOException e) {
-                e.printStackTrace();
+
+    /**
+     * Checks for any occurrences of "\" within a path and converts them to "/".
+     * @param path the path to to be checked
+     */
+    public static String pathFix(String path){
+        char[] charPath = path.toCharArray();
+
+        for (int i = 0; i < path.length(); i++){
+            if (charPath[i] == '\\'){
+                charPath[i] = '/';
             }
         }
+        // TODO: 10/22/2017 Better method.
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < charPath.length; i++)
+            sb.append(charPath[i]);
+        return sb.toString();
+    }
 
+    /**
+     * Write a serialized ArrayList containing locker paths to a file.
+     * @param recentLockerList The list of lockers paths.
+     * @throws IOException
+     */
+    public static void writeLockerList(List<String> recentLockerList) throws IOException {
+        FileOutputStream fos = new FileOutputStream(RECENT_LOCKER_LIST_PATH);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+        os.writeObject(recentLockerList);
+        os.flush(); os.close();
+        fos.flush(); fos.close();
+
+    }
+
+    public static List<String> readLockerList() throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(RECENT_LOCKER_LIST_PATH);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        ArrayList readObject = (ArrayList) ois.readObject();
+        return readObject;
+    }
+
+    public static void main(String[] args){
+        String s = "C:\\Users\\Other\\Desktop\\newLockerpath\\manuallyAddedLocker.lok";
+        System.out.println(s);
+        System.out.println(pathFix(s));
     }
 
 

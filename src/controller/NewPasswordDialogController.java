@@ -4,6 +4,7 @@ import core.Context;
 import core.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,16 +28,31 @@ public class NewPasswordDialogController {
     private TextArea pwArea;
     @FXML
     private TextArea noteArea;
+    @FXML
+    private Button addPWButton;
 
 
     @FXML
     private void initialize(){
+        svcField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+        });
+
+        noteArea.textProperty().addListener((observable, oldValue, newValue) -> {
+
+        });
+
+        svcField.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+
+
 
     }
 
     @FXML
     private void handleAddPassword(){
-        if (svcField.getText().equals("") || !usrField.getText().equals("") || !pwArea.getText().equals("") ){
+        if (svcField.getText().equals("") || usrField.getText().equals("") || pwArea.getText().equals("") ){
             emptyFieldError();
         }
         else {
