@@ -1,5 +1,7 @@
 package core;
 
+import javafx.stage.FileChooser;
+
 import javax.crypto.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -18,6 +20,8 @@ public class FileManagement {
     public static final String configDirectory = userHome+"/.passwordlocker/";
     public static final String configFile = configDirectory+"locker.config";
     public static final String RECENT_LOCKER_LIST_PATH = configDirectory+"lockers";
+    public static final FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter(
+            "Locker File", "*.lok");
 
     /**
      * Returns a Locker object if the provided file in the path is an encrypted, serialized Locker and the password

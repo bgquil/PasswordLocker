@@ -2,6 +2,7 @@ package controller;
 
 import core.Context;
 import core.FileManagement;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import core.Main;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -25,12 +27,24 @@ public class RecentLockerController {
 
 
     @FXML
-    private ListView<String> recentLockerList;
+    private ListView<String> recentLockerList = new ListView<>();
+    @FXML
+    private Button openLockerButton;
+    @FXML
+    private Button removeLockerButton;
 
 
     @FXML
     private void initialize(){
         initRecentLockerListView();
+
+        openLockerButton.disableProperty()
+                .bind(recentLockerList.getSelectionModel().selectedItemProperty().isNull());
+        removeLockerButton.disableProperty()
+                .bind(recentLockerList.getSelectionModel().selectedItemProperty().isNull());
+
+        //recentLockerList.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, filter );
+
 
     }
 
@@ -110,12 +124,11 @@ public class RecentLockerController {
     @FXML
     private void handleImportLocker(){
         FileChooser f = new FileChooser();
-        f.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                        "Locker File", "*.lok"));
+        f.getExtensionFilters().add(FileManagement.fileFilter);
         f.setTitle("Add Existing Locker");
         File file = f.showOpenDialog(new Stage());
 
-        if (file.exists()){
+        if (file != null && file.exists()) {
             System.out.println("exists");
             System.out.println(file.getAbsolutePath());
             Context.getInstance().getRecentLockers().add(

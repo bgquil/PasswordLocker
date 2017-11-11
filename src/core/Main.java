@@ -49,6 +49,7 @@ public class Main extends Application {
 
     private void showLockerView(){
         try {
+            primaryStage.setResizable(true);
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("/view/LockerView.fxml"));
@@ -86,6 +87,7 @@ public class Main extends Application {
             RecentLockerController controller = loader.getController(); // Loader must get controller
             controller.setMainApp(this);
             primaryStage.centerOnScreen();
+            primaryStage.setResizable(false);
             primaryStage.show();
 
         } catch(IOException e) {
