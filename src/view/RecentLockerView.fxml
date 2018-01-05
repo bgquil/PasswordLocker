@@ -5,13 +5,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentLockerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@css/theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentLockerController">
    <children>
       <ListView fx:id="recentLockerList" layoutX="13.0" layoutY="66.0" prefHeight="260.0" prefWidth="453.0" />
       <Button fx:id="openLockerButton" layoutX="494.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleOpenLocker" text="Open Locker" />
       <Button layoutX="465.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleCreateLocker" text="Create New Locker" />
       <Button layoutX="36.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-      <Label layoutX="60.0" layoutY="35.0" text="Recent Lockers" />
+      <Label layoutX="21.0" layoutY="4.0" prefHeight="53.0" prefWidth="267.0" styleClass="label-header" text="Recent Lockers" />
       <Button layoutX="491.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleImportLocker" text="Import Locker" />
       <Button fx:id="removeLockerButton" layoutX="208.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleRemoveLocker" text="Remove Locker" />
    </children>
