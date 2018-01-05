@@ -52,8 +52,6 @@ public class LockerController {
 
     // Edit Items
     @FXML
-    private AnchorPane editPane;
-    @FXML
     private GridPane editGrid;
     //Fields for edit area.
     @FXML
@@ -91,7 +89,7 @@ public class LockerController {
         initBindings();
         //Setup date formatting for generate/edit columns
         initDateFormatting();
-        editPane.setDisable(true);
+
 
         initLoadLocker();
 
@@ -119,7 +117,6 @@ public class LockerController {
         openLocker = new SimpleBooleanProperty(false);
         newPWButton.visibleProperty().bind(openLocker);
         closeLockerButton.visibleProperty().bind(openLocker);
-        editPane.visibleProperty().bind(openLocker);
     }
 
     private void initDateFormatting(){
@@ -139,7 +136,7 @@ public class LockerController {
                         // Format date.
                         setText(myDateFormatter.format(item));
 
-                        // Style all dates in March with a different color.
+
                     }
                 }
             };
@@ -170,7 +167,7 @@ public class LockerController {
         openLocker.setValue(true);
         lockerPathLabel.setText("\t"+Context.getInstance().getFilePath());
 
-        editPane.setDisable(false);
+
     }
 
     private void handleDisplayPasswordInfoFromTable(int pwIndex){
@@ -205,7 +202,6 @@ public class LockerController {
 //                loadPasswords();
 //                lockerPathLabel.setText("\t"+filePath);
 //
-//                editPane.setDisable(false);
 //
 //            } catch (Exception e) {
 //                lockerReadError();
@@ -244,8 +240,6 @@ public class LockerController {
     private void closeLocker(){
         lockerPathLabel.setText("");
         passwordTable.getItems().clear();
-        editPane.setDisable(true);
-        editPane.setDisable(true);
 
         svcField.clear();
         usrField.clear();
