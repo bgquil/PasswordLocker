@@ -25,7 +25,7 @@ public class RootLayoutController {
     @FXML
     private void handleAbout() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Password Locker - About");
+        alert.setTitle("Credential Locker - About");
         alert.setHeaderText("About");
         alert.setContentText("This is an about page");
 

@@ -3,11 +3,9 @@ package controller;
 import core.Context;
 import core.FileManagement;
 import core.Locker;
-import core.Password;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -104,7 +102,7 @@ public class NewLockerDialogController {
     @FXML
     private void emptyFieldError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("Empty Fields");
         alert.setContentText("The location, password, and password confirmation field may not be empty.");
         alert.showAndWait();
@@ -113,7 +111,7 @@ public class NewLockerDialogController {
     @FXML
     private void pwMatchError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("The provided passwords do not match.");
         alert.setContentText("The password field and password confirmation field must be the same.");
         alert.showAndWait();
@@ -122,7 +120,7 @@ public class NewLockerDialogController {
     @FXML
     private void lockerCreationInformation(String path){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Password Locker");
+        alert.setTitle("Credential Locker");
         alert.setHeaderText("A new Locker has been created.");
         alert.setContentText("New Locker location: " + path);
         alert.showAndWait();
@@ -131,7 +129,7 @@ public class NewLockerDialogController {
     @FXML
     private void lockerCreationError(String path){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker");
+        alert.setTitle("Credential Locker");
         alert.setHeaderText("There was an error.");
         alert.setContentText("A Locker could not be created at: " + path);
     }

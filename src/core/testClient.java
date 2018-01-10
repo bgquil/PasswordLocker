@@ -1,13 +1,9 @@
 package core;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextInputDialog;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,13 +36,13 @@ public class testClient {
 
         Locker l2 = null;
 
-        l.addPassword(new Password("amazon", "u","pw123","business",true));
-        l.addPassword(new Password("Twitter", "u","pw123","business", true));
-        l.addPassword(new Password("Twitter", "u","pw123","business", true));
-        l.addPassword(new Password("TEST", "u","pw123","business", true));
-        l.addPassword(new Password("BOA", "u","pw123","business", true));
+        l.addCredential(new Credential("amazon", "u","pw123","business"));
+        l.addCredential(new Credential("Twitter", "u","pw123","business"));
+        l.addCredential(new Credential("Twitter", "u","pw123","business"));
+        l.addCredential(new Credential("TEST", "u","pw123","business"));
+        l.addCredential(new Credential("BOA", "u","pw123","business"));
 
-        System.out.println(l.getPasswords().get(0).getGenerationDate());
+        System.out.println(l.getCredentials().get(0).getGenerationDate());
         try {
             FileManagement.writeFile(l, "testLocker2.bin", "abc");
         } catch (IOException e) {
@@ -67,10 +63,10 @@ public class testClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(l2.getPasswords().get(0));
+        System.out.println(l2.getCredentials().get(0));
 
-        System.out.println(l2.getPasswords().get(1));
-        System.out.println(l2.getPasswords().get(4));
+        System.out.println(l2.getCredentials().get(1));
+        System.out.println(l2.getCredentials().get(4));
 
 
         System.out.println(FileManagement.configDirectory);

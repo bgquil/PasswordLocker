@@ -1,7 +1,7 @@
 package controller;
 
 import core.Context;
-import core.Password;
+import core.Credential;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -56,13 +56,13 @@ public class NewPasswordDialogController {
             emptyFieldError();
         }
         else {
-            Password newPW = new Password(
+            Credential newCredential = new Credential(
                     svcField.getText(),
                     usrField.getText(),
                     pwArea.getText(),
-                    noteArea.getText(),
-                    true);
-            Context.getInstance().getLocker().addPassword(newPW);
+                    noteArea.getText()
+                    );
+            Context.getInstance().getLocker().addCredential(newCredential);
             this.dialogStage.close();
         }
     }
@@ -75,7 +75,7 @@ public class NewPasswordDialogController {
     @FXML
     private void emptyFieldError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("Empty Fields");
         alert.setContentText("The service, username, and password fields may not be empty");
 

@@ -37,17 +37,17 @@ public class LockerController {
 
     //Table
     @FXML
-    private TableView<Password> passwordTable;
+    private TableView<Credential> passwordTable;
     @FXML
-    private TableColumn<Password, String> svcCol;
+    private TableColumn<Credential, String> svcCol;
     @FXML
-    private TableColumn<Password, String> userCol;
+    private TableColumn<Credential, String> userCol;
     @FXML
-    private TableColumn<Password, String> pwCol;
+    private TableColumn<Credential, String> pwCol;
     @FXML
-    private TableColumn<Password, LocalDateTime> genCol;
+    private TableColumn<Credential, LocalDateTime> genCol;
     @FXML
-    private TableColumn<Password, LocalDateTime> editCol;
+    private TableColumn<Credential, LocalDateTime> editCol;
 
     // Edit Items
     @FXML
@@ -123,7 +123,7 @@ public class LockerController {
 
         // Custom rendering of genCol containing the generation date LocalDateTime Object
         genCol.setCellFactory(column -> {
-            return new TableCell<Password, LocalDateTime>() {
+            return new TableCell<Credential, LocalDateTime>() {
                 @Override
                 protected void updateItem(LocalDateTime item, boolean empty) {
                     super.updateItem(item, empty);
@@ -142,7 +142,7 @@ public class LockerController {
         });
         // Custom rendering of editCol containing the edit date LocalDateTime Object
         editCol.setCellFactory(column -> {
-            return new TableCell<Password, LocalDateTime>() {
+            return new TableCell<Credential, LocalDateTime>() {
                 @Override
                 protected void updateItem(LocalDateTime item, boolean empty) {
                     super.updateItem(item, empty);
@@ -170,7 +170,7 @@ public class LockerController {
     }
 
     private void handleDisplayPasswordInfoFromTable(int pwIndex){
-        Password pw = passwordTable.getItems().get(pwIndex);
+        Credential pw = passwordTable.getItems().get(pwIndex);
         svcField.setText(pw.getService());
         usrField.setText(pw.getUsername());
         pwArea.setText(pw.getPassword());
@@ -216,7 +216,7 @@ public class LockerController {
         passwordTable.getItems().clear();
         if (Context.getInstance().getLocker() != null)
             passwordTable.setItems(
-                    FXCollections.observableArrayList(Context.getInstance().getLocker().getPasswords()));
+                    FXCollections.observableArrayList(Context.getInstance().getLocker().getCredentials()));
     }
 
 
@@ -257,16 +257,16 @@ public class LockerController {
     @FXML
     private void handleSave(){
 
-        Password selected = passwordTable.getSelectionModel().getSelectedItem();
+        Credential selected = passwordTable.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirm Update");
         alert.setContentText("Service: ID:"+selected.getService());
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             int index = passwordTable.getSelectionModel().getSelectedIndex();
-            //Password p = Context.getInstance().getLocker().getPassword(index);
+            //Credential p = Context.getInstance().getLocker().getCredential(index);
             Locker openLocker = Context.getInstance().getLocker();
-            openLocker.modifyPassword(
+            openLocker.modifyCredential(
                     index,
                     svcField.getText(),
                     usrField.getText(),
@@ -280,14 +280,14 @@ public class LockerController {
 
     @FXML
     private void handleRemove(){
-        Password selected = passwordTable.getSelectionModel().getSelectedItem();
+        Credential selected = passwordTable.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirm Removal");
         alert.setContentText("Service: ID:"+selected.getService());
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             int index = passwordTable.getSelectionModel().getSelectedIndex();
-            Context.getInstance().getLocker().removePassword(index);
+            Context.getInstance().getLocker().removeCredential(index);
             loadPasswords();
         }
         else{
@@ -300,7 +300,7 @@ public class LockerController {
     @FXML
     private void lockerReadError(){
         Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("Error Occurred");
         alert.setContentText("There was an error opening the specified locker.\n" +
                 "Either the specified file is not a locker or the provided key is incorrect.");
@@ -310,7 +310,7 @@ public class LockerController {
     @FXML
     private void lockerSaveError(String path){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker");
+        alert.setTitle("Credential Locker");
         alert.setHeaderText("There was an error.");
         alert.setContentText("The Locker could not be written to disk at: " + path);
     }
@@ -327,7 +327,7 @@ public class LockerController {
     }
 
     /*
-    * 	Open the Add Password Dialog.
+    * 	Open the Add Credential Dialog.
     */
     @FXML
     private void handleShowNewPasswordDialog() {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
     public class Locker implements Serializable{
 
-    private ArrayList<Password> passwords;
+    private ArrayList<Credential> credentials;
     private LocalDateTime generationDate;
     private String name;
 
@@ -22,31 +22,52 @@ import java.util.ArrayList;
     public Locker(String name){
         this.name = name;
         generationDate = LocalDateTime.now();
-        passwords = new ArrayList<Password>();
+        credentials = new ArrayList<Credential>();
     }
 
-    public ArrayList<Password> getPasswords(){
-        return this.passwords;
+    /**
+     * Returns the list of credentials in the locker.
+     * @return an ArrayList containing credentials.
+     */
+    public ArrayList<Credential> getCredentials(){
+        return this.credentials;
     }
 
-    public void addPassword(Password p){
-        passwords.add(p);
+    /**
+     * Adds a new credential to the locker.
+     * @param c the credential to be added
+     */
+    public void addCredential(Credential c){
+        credentials.add(c);
     }
-    public void removePassword(int index){
-        passwords.remove(index);
+
+    /**
+     * Removes the credential at the provided index.
+     * @param index the index of the credential to be removed
+     */
+    public void removeCredential(int index){
+        credentials.remove(index);
     }
 
     /**
      * Obtains a password object at a given index.
      * @param index the provided index from which to fetch the locker.
-     * @return a Password object.
+     * @return a Credential object
      */
-    public Password getPassword(int index) {return passwords.get(index);}
+    public Credential getCredential(int index) {return credentials.get(index);}
 
 
-    public void modifyPassword(int index, String service, String username, String password, String note) {
-        Password p = getPassword(index);
-        p.modifyPassword(service, username, password, note);
+    /**
+     * Modifies a password at a given index in the locker.
+     * @param index the index of the password in the locker.
+     * @param service the service to which the password belongs
+     * @param username the username as part of the login credentials
+     * @param password the password as part of the login credentials
+     * @param note miscellaneous user-provided notes
+     */
+    public void modifyCredential(int index, String service, String username, String password, String note) {
+        Credential p = getCredential(index);
+        p.modifyCredential(service, username, password, note);
     }
 
 

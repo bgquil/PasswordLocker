@@ -171,7 +171,7 @@ public class RecentLockerController {
     @FXML
     private void fileReadError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("File not found");
         alert.setContentText("The locker at the given path was not found.");
         alert.showAndWait();
@@ -180,7 +180,7 @@ public class RecentLockerController {
     @FXML
     private void lockerReadError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Password Locker - Error");
+        alert.setTitle("Credential Locker - Error");
         alert.setHeaderText("Error Occurred");
         alert.setContentText("There was an error opening the specified locker.\n" +
                 "Either the specified file is not a locker or the provided key is incorrect.");

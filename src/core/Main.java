@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Password Locker");
+        this.primaryStage.setTitle("Credential Locker");
 
         showRecentLocker();
 
@@ -103,7 +103,7 @@ public class Main extends Application {
             AnchorPane newPasswordDialog = (AnchorPane) loader.load();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("New Password");
+            dialogStage.setTitle("New Credential");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(newPasswordDialog);
