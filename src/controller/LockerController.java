@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import core.Main;
 
@@ -18,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
- * Created by Other on 7/6/2017.
+ * Created by Benjamin Quilliams on 7/6/2017.
  */
 public class LockerController {
 
@@ -28,7 +30,7 @@ public class LockerController {
         this.mainApp = mainApp;
     }
 
-    private BooleanProperty openLocker;
+    private BooleanProperty credentialSelected;
 
 
      /*
@@ -73,6 +75,13 @@ public class LockerController {
     private Button closeLockerButton;
     @FXML
     private Label lockerPathLabel;
+    @FXML
+    private Button removePasswordButton;
+    @FXML
+    private Button copyPasswordButton;
+    @FXML
+    private Button savePasswordButton;
+
 
     /*
     End FXML element declaration.
@@ -88,10 +97,7 @@ public class LockerController {
         initBindings();
         //Setup date formatting for generate/edit columns
         initDateFormatting();
-
-
         initLoadLocker();
-
 
     }
 
@@ -102,20 +108,24 @@ public class LockerController {
         genCol.setCellValueFactory(cellData -> cellData.getValue().generationDateProperty());
         editCol.setCellValueFactory(cellData -> cellData.getValue().editDateProperty());
 
+
+
         //Listen for selections in passwordTable and show the selected item in the edit pane
         passwordTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 handleDisplayPasswordInfoFromTable(
                         passwordTable.getSelectionModel().getSelectedIndex()
                 );
+               credentialSelected.setValue(true);
             }
         });
     }
 
     private void initBindings(){
-        openLocker = new SimpleBooleanProperty(false);
-        newPWButton.visibleProperty().bind(openLocker);
-        closeLockerButton.visibleProperty().bind(openLocker);
+        credentialSelected = new SimpleBooleanProperty(false);
+        copyPasswordButton.visibleProperty().bind(credentialSelected);
+        removePasswordButton.visibleProperty().bind(credentialSelected);
+        savePasswordButton.visibleProperty().bind(credentialSelected);
     }
 
     private void initDateFormatting(){
@@ -163,10 +173,7 @@ public class LockerController {
 
     private void initLoadLocker(){
         loadPasswords();
-        openLocker.setValue(true);
         lockerPathLabel.setText("\t"+Context.getInstance().getFilePath());
-
-
     }
 
     private void handleDisplayPasswordInfoFromTable(int pwIndex){
@@ -246,14 +253,11 @@ public class LockerController {
         genField.clear();
         changeField.clear();
         noteArea.clear();
-        openLocker.setValue(false);
         saveFile();
         Context.getInstance().clearContext();
         mainApp.showRecentLocker();
     }
 
-
-    // TODO: 8/24/2017 setup save
     @FXML
     private void handleSave(){
 
@@ -298,6 +302,15 @@ public class LockerController {
     }
 
     @FXML
+    private void handleCopyPasswordClipboard() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(pwArea.getText());
+        clipboard.setContent(content);
+
+    }
+
+    @FXML
     private void lockerReadError(){
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Credential Locker - Error");
@@ -319,12 +332,6 @@ public class LockerController {
     Menu Items
      */
 
-    @FXML
-    private void handleNewLockerDialog() {
-        System.out.println("1");
-        mainApp.showNewLockerDialog();
-        System.out.println("2");
-    }
 
     /*
     * 	Open the Add Credential Dialog.

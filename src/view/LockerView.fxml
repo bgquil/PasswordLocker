@@ -82,8 +82,9 @@
                      </font></Label>
                   <TextArea fx:id="noteArea" prefHeight="147.0" prefWidth="279.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextArea fx:id="pwArea" prefHeight="30.0" prefWidth="274.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleSave" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                  <Button fx:id="removeButton" mnemonicParsing="false" onAction="#handleRemove" text="Remove" GridPane.rowIndex="6" />
+                  <Button fx:id="savePasswordButton" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleSave" text="Save" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Button fx:id="removePasswordButton" mnemonicParsing="false" onAction="#handleRemove" text="Remove" GridPane.rowIndex="6" />
+                  <Button fx:id="copyPasswordButton" mnemonicParsing="false" onAction="#handleCopyPasswordClipboard" text="Copy Password" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
             </GridPane>
          </children>
