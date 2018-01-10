@@ -30,6 +30,8 @@ public class NewLockerDialogController {
     @FXML
     private TextField locField;
     @FXML
+    private TextField nameField;
+    @FXML
     private TextField pwField;
     @FXML
     private TextField pwConfirmField;
@@ -57,6 +59,7 @@ public class NewLockerDialogController {
     @FXML
     private void handleCreateLocker(){
         String path = locField.getText();
+        String name = nameField.getText();
         String pw = pwField.getText();
         String pwConfirm = pwConfirmField.getText();
 
@@ -66,7 +69,7 @@ public class NewLockerDialogController {
         else if (pwField.getText().isEmpty() || pwConfirmField.getText().isEmpty() || locField.getText().isEmpty())
             emptyFieldError();
         else{
-            Locker defaultLocker = new Locker(true);
+            Locker defaultLocker = new Locker(name);
             try {
                 // Write locker and add it to recent locker list.
                 FileManagement.writeFile(defaultLocker, path, pw);
