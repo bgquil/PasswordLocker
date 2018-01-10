@@ -64,7 +64,7 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #005797;
+    -fx-background-color: #939eaf;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
 }
@@ -100,3 +100,8 @@
 }
 
 .label { -fx-text-fill: #e8ebf4 }
+
+.text-field {
+        -fx-font-size: 14pt;
+        -fx-font-family: "Helvetica Neue";
+}
