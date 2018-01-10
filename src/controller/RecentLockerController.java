@@ -87,7 +87,7 @@ public class RecentLockerController {
      * @param filePath the path of the file supplied by the user.
      */
     private boolean readFile(String filePath){
-        Dialog<String> dialog = new TextInputDialog();
+        Dialog<String> dialog = new PasswordInputDialog();
 
         dialog.setTitle("Open Locker");
         dialog.setContentText("Enter the key for the locker");

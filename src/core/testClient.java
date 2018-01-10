@@ -36,7 +36,7 @@ public class testClient {
     }
 
     private static void lockerTest(){
-        Locker l = new Locker(true);
+        Locker l = new Locker("Test Locker");
 
         Locker l2 = null;
 

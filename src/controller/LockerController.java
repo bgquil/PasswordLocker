@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import core.Main;
 
@@ -265,8 +264,10 @@ public class LockerController {
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             int index = passwordTable.getSelectionModel().getSelectedIndex();
-            Password p = Context.getInstance().getLocker().modifyPassword(index);
-            p.modifyPassword(
+            //Password p = Context.getInstance().getLocker().getPassword(index);
+            Locker openLocker = Context.getInstance().getLocker();
+            openLocker.modifyPassword(
+                    index,
                     svcField.getText(),
                     usrField.getText(),
                     pwArea.getText(),
