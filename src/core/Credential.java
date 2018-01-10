@@ -7,12 +7,11 @@ import javafx.beans.property.StringProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
- * Created by Other on 6/29/2017.
+ * Created by Benjamin Quilliams on 6/29/2017.
  */
-public class Password implements Serializable {
+public class Credential implements Serializable {
 
     private String service;
     private String username;
@@ -23,22 +22,19 @@ public class Password implements Serializable {
 
 
     /**
-     * Used in the creation of a new password entry.
-     * @param service
-     * @param username
-     * @param password
-     * @param notes
-     * @param newPW
+     * Used in the creation of a new credential.
+     * @param service the service to which the password belongs
+     * @param username the username as part of the login credentials
+     * @param password the password as part of the login credentials
+     * @param notes miscellaneous user-provided notes
      */
-    public Password(String service, String username, String password, String notes, boolean newPW){
+    public Credential(String service, String username, String password, String notes){
         this.service = service;
         this.username = username;
         this.password = password;
         this.notes = notes;
-        //firstRun
-        if (newPW) {
-            this.generationDate = this.editDate =  LocalDateTime.now();
-        }
+        this.generationDate = this.editDate =  LocalDateTime.now();
+
     }
 
 
@@ -48,10 +44,10 @@ public class Password implements Serializable {
      * @param service the service to which the password belongs
      * @param username the username as part of the login credentials
      * @param password the password as part of the login credentials
-     * @param notes misc notes
+     * @param notes miscellaneous user-provided notes
      */
-    public Password(String service, String username, String password, String notes,
-                    LocalDateTime genDate, LocalDateTime editDate){
+    public Credential(String service, String username, String password, String notes,
+                      LocalDateTime genDate, LocalDateTime editDate){
         this.service = service;
         this.username = username;
         this.password = password;
@@ -61,12 +57,16 @@ public class Password implements Serializable {
     }
 
 
+    /**
+     * Changes the password for the credential.
+     * @param newPassword the new password.
+     */
     public void updatePassword(String newPassword){
         this.password = newPassword;
         this.editDate = LocalDateTime.now();
     }
 
-    public void modifyPassword(String service, String username, String password, String notes){
+    public void modifyCredential(String service, String username, String password, String notes){
         this.service = service;
         this.username = username;
         if (!this.password.equals(password))
@@ -123,13 +123,24 @@ public class Password implements Serializable {
                 "\nNotes: "+ this.notes;
     }
 
-//    public boolean equals(Object o){
-//        if (this == o)
-//                return true;
-//        if (o == null)
-//            return false;
-//        return true;
-//    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this)
+                return true;
+        if (!(o instanceof Credential))
+            return false;
+        Credential c = (Credential) o;
+        return c.service.equals(service) &&
+                c.username.equals(username) &&
+                c.password.equals(password) &&
+                c.notes.equals(c);
+
+    }
+
+    /*
+    Begin JavaFX properties
+     */
 
     public StringProperty serviceProperty(){
         return new SimpleStringProperty(this.service);
