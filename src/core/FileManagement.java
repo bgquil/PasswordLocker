@@ -122,17 +122,11 @@ public class FileManagement {
      * @param path the path to to be checked
      */
     public static String pathFix(String path){
-        char[] charPath = path.toCharArray();
-
-        for (int i = 0; i < path.length(); i++){
-            if (charPath[i] == '\\'){
-                charPath[i] = '/';
-            }
+        StringBuilder sb = new StringBuilder(path);
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '\\')
+                sb.replace(i, i+1, "/");
         }
-        // TODO: 10/22/2017 Better method.
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < charPath.length; i++)
-            sb.append(charPath[i]);
         return sb.toString();
     }
 
@@ -156,12 +150,4 @@ public class FileManagement {
         ArrayList readObject = (ArrayList) ois.readObject();
         return readObject;
     }
-
-    public static void main(String[] args){
-        String s = "C:\\Users\\Other\\Desktop\\newLockerpath\\manuallyAddedLocker.lok";
-        System.out.println(s);
-        System.out.println(pathFix(s));
-    }
-
-
 }
