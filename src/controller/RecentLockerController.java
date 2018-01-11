@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import core.Main;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -42,6 +43,16 @@ public class RecentLockerController {
                 .bind(recentLockerList.getSelectionModel().selectedItemProperty().isNull());
         removeLockerButton.disableProperty()
                 .bind(recentLockerList.getSelectionModel().selectedItemProperty().isNull());
+        recentLockerList.setOnKeyPressed( (event) ->  {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleOpenLocker();
+            }
+        });
+        recentLockerList.setOnMouseClicked( (event) -> {
+            if (event.getClickCount() == 2){
+                handleOpenLocker();
+            }
+        });
 
         //recentLockerList.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, filter );
 
@@ -116,9 +127,6 @@ public class RecentLockerController {
         //reinitialize RecentLockerController to update recent list.
         applyRecentLockerListChanges();
         initialize();
-//        RECENT_LOCKER_LIST_PATH.getSelectionModel().selectLast();
-//        handleOpenLocker();
-
     }
 
     @FXML
@@ -129,8 +137,6 @@ public class RecentLockerController {
         File file = f.showOpenDialog(new Stage());
 
         if (file != null && file.exists()) {
-            System.out.println("exists");
-            System.out.println(file.getAbsolutePath());
             Context.getInstance().getRecentLockers().add(
                     FileManagement.pathFix(file.getAbsolutePath()));
             applyRecentLockerListChanges();
