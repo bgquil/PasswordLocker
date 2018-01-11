@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Created by Other on 7/17/2017.
+ * Created by Benjamin Quilliams on 7/17/2017.
  */
 public class NewPasswordDialogController {
 
@@ -28,8 +28,6 @@ public class NewPasswordDialogController {
     private TextArea pwArea;
     @FXML
     private TextArea noteArea;
-    @FXML
-    private Button addPWButton;
 
 
     @FXML
@@ -43,7 +41,6 @@ public class NewPasswordDialogController {
         });
 
         svcField.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
 
 

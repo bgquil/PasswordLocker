@@ -1,4 +1,8 @@
-package core;
+package testing;
+
+import core.Credential;
+import core.FileManagement;
+import core.Locker;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

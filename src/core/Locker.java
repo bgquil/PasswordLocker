@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * Created by Benjamin Quilliams on 6/29/2017.
  */
 
-
-    public class Locker implements Serializable{
+    public class Locker implements Serializable {
 
     private ArrayList<Credential> credentials;
     private LocalDateTime generationDate;
@@ -55,7 +54,6 @@ import java.util.ArrayList;
      * @return a Credential object
      */
     public Credential getCredential(int index) {return credentials.get(index);}
-
 
     /**
      * Modifies a password at a given index in the locker.

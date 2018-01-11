@@ -48,20 +48,13 @@
 }
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #4f5fea;
+    -fx-background-color: -fx-table-cell-border-color, transparent;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
     -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -fx-font-size: 16pt;
 }
 
-.table-row-cell:odd{
-    -fx-background-color: -fx-table-cell-border-color, #343e99;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em; /* 0 */
-    -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -fx-font-size: 16pt;
-}
 
 .table-row-cell:selected {
     -fx-background-color: #939eaf;
