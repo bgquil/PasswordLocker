@@ -138,9 +138,8 @@ public class Credential implements Serializable {
 
     }
 
-    /*
-    Begin JavaFX properties
-     */
+
+    //Begin JavaFX properties
 
     public StringProperty serviceProperty(){
         return new SimpleStringProperty(this.service);

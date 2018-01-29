@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
- * Created by Other on 6/30/2017.
+ * Created by Benjamin Quilliams on 6/30/2017.
  */
 
 public class Crypto {
@@ -22,7 +22,7 @@ public class Crypto {
     /**
      * Returns a Cipher object in decrypt mode with the provided password.
      * @param pw The plaintext password used for encrypting/decrypting a Locker object.
-     * @return Cipher
+     * @return Cipher used for decryption
      */
     public static Cipher getCipherDecrypt(String pw){
         try {
@@ -42,7 +42,7 @@ public class Crypto {
     /**
      * Returns a Cipher object in encrypt mode with the provided password.
      * @param pw The plaintext password used for encrypting/decrypting a Locker object.
-     * @return Cipher
+     * @return Cipher used for encryption
      */
     public static Cipher getCipherEncrypt(String pw){
         try {
@@ -61,7 +61,7 @@ public class Crypto {
 
     /**
      * Used to generate a SecretKeySpec needed to initialize a Cipher.
-     * @param pw
+     * @param pw user supplied password
      * @return
      */
     private static SecretKeySpec generateKeySpec(String pw){

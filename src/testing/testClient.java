@@ -67,13 +67,6 @@ public class testClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(l2.getCredentials().get(0));
 
-        System.out.println(l2.getCredentials().get(1));
-        System.out.println(l2.getCredentials().get(4));
-
-
-        System.out.println(FileManagement.configDirectory);
-        System.out.println(FileManagement.configFile);
     }
 }

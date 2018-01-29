@@ -48,6 +48,8 @@ public class RecentLockerController {
                 handleOpenLocker();
             }
         });
+
+        //Handle doubleclick to open a locker
         recentLockerList.setOnMouseClicked( (event) -> {
             if (event.getClickCount() == 2){
                 handleOpenLocker();
@@ -55,8 +57,6 @@ public class RecentLockerController {
         });
 
         //recentLockerList.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, filter );
-
-
     }
 
     private void initRecentLockerListView() {
@@ -93,7 +93,7 @@ public class RecentLockerController {
 
 
     /**
-     * Called from handleOpenFile(). Attempts to open a locker file using a user-supplied key.
+     * Called from handleOpenLocker(). Attempts to open a locker file using a user-supplied key.
      * If the key is incorrect or the file is not a locker file, the lockerReadError() will prompt.
      * @param filePath the path of the file supplied by the user.
      */
@@ -168,8 +168,6 @@ public class RecentLockerController {
 
     }
 
-
-
     /*
     Begin Error Dialogs
      */
@@ -194,8 +192,8 @@ public class RecentLockerController {
     }
 
     /*
- * 	Close the Application
- */
+    * 	Close the Application
+    */
     @FXML
     private void handleExit() {
         System.exit(0);

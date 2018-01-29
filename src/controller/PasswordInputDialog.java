@@ -1,9 +1,5 @@
 package controller;
 
-/**
- * @author Benjamin Quilliams
- * 1/8/2018
- */
 
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import javafx.application.Platform;
@@ -14,8 +10,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
 public class PasswordInputDialog extends Dialog<String> {
-
-
 
     private final GridPane grid;
     private final Label label;

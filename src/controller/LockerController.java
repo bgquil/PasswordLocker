@@ -163,8 +163,6 @@ public class LockerController {
                     } else {
                         // Format date.
                         setText(myDateFormatter.format(item));
-
-                        // Style all dates in March with a different color.
                     }
                 }
             };
@@ -186,38 +184,6 @@ public class LockerController {
         noteArea.setText(pw.getNotes());
     }
 
-//    /**
-//     * Called from handleOpenFile(). Attempts to open a locker file using a user-supplied key.
-//     * If the key is incorrect or the file is not a locker file, the lockerReadError() will prompt.
-//     * @param filePath the path of the file supplied by the user.
-//     */
-//    private void readFile(String filePath){
-//        TextInputDialog dialog = new TextInputDialog("");
-//        dialog.setTitle("Open Locker");
-//        dialog.setContentText("Enter the key for the locker");
-//
-//        Optional<String> result = dialog.showAndWait();
-//        if (result.isPresent()){
-//            String key = result.get();
-//
-//            try {
-//                Context.getInstance().setLocker(FileManagement.openLockerFile(filePath, key));
-//                openLocker.setValue(true);
-//                Context.getInstance().setFilePath(filePath);
-//                Context.getInstance().setLockerKey(key);
-//                loadPasswords();
-//                lockerPathLabel.setText("\t"+filePath);
-//
-//
-//            } catch (Exception e) {
-//                lockerReadError();
-//                readFile(filePath);
-//            }
-//        }
-//        else{
-//            dialog.close();
-//        }
-//    }
 
     private void loadPasswords(){
         passwordTable.getItems().clear();
@@ -268,7 +234,6 @@ public class LockerController {
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             int index = passwordTable.getSelectionModel().getSelectedIndex();
-            //Credential p = Context.getInstance().getLocker().getCredential(index);
             Locker openLocker = Context.getInstance().getLocker();
             openLocker.modifyCredential(
                     index,

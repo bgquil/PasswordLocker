@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Other on 6/30/2017.
+ * Created by Benjamin Quilliams on 6/30/2017.
  */
 public class FileManagement {
 
@@ -144,6 +144,12 @@ public class FileManagement {
 
     }
 
+    /**
+     * Return a List of known lockers.
+     * @return A List containing the paths of known lockers.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static List<String> readLockerList() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(RECENT_LOCKER_LIST_PATH);
         ObjectInputStream ois = new ObjectInputStream(fis);

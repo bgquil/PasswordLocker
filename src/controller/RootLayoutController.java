@@ -1,15 +1,12 @@
 package controller;
 
-
 import core.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
-
-
 /**
- * Created by Other on 7/6/2017.
+ * Created by Benjamin Quilliams on 7/6/2017.
  */
 public class RootLayoutController {
 
