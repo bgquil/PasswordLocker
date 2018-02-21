@@ -4,9 +4,7 @@ import core.Context;
 import core.FileManagement;
 import core.Locker;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -15,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Other on 7/17/2017.
+ * Created by Benjamin Quilliams on 7/17/2017.
  */
 public class NewLockerDialogController {
 
@@ -30,16 +28,31 @@ public class NewLockerDialogController {
     @FXML
     private TextField nameField;
     @FXML
-    private TextField pwField;
+    private PasswordField pwField;
     @FXML
-    private TextField pwConfirmField;
+    private PasswordField pwConfirmField;
     @FXML
     private Label pwConfirmLabel;
+    @FXML
+    private Button createLockerButton;
 
 
     @FXML
     private void initialize(){
+        createLockerButton.setDisable(true);
+        // listen and modify password confirmation label based on if pwfield == pconfirmfield
+        pwConfirmField.textProperty().addListener( ((observable, oldValue, newValue) -> {
+            if (!(pwField.getText().equals(pwConfirmField.getText()))){
+                pwConfirmLabel.setText("Passwords do not match.");
+                pwConfirmLabel.setStyle("-fx-background-color: #a03d3d");
+                createLockerButton.setDisable(true);
 
+            }
+            else {
+                pwConfirmLabel.setText("");
+                createLockerButton.setDisable(false);
+            }
+        }));
     }
 
     @FXML
