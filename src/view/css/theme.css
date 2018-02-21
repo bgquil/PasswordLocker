@@ -1,7 +1,7 @@
 
 
 .root{
-    -fx-background-color: linear-gradient(#274fb5 0%, #0d1c42 100%);
+    -fx-background-color: #334147;
 }
 
 /*
@@ -15,17 +15,18 @@
     -fx-text-fill: white;
     -fx-background-color: transparent;
     -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -fx-font-size: 10pt;
+    -fx-font-size: 12pt;
 }
 
 .list-view .list-cell:selected{
     -fx-background-color: white;
-        -fx-text-fill: black;
+    -fx-text-fill: black;
 }
 
 /*
     TableView
 */
+
 .table-view{
    -fx-background-color: transparent;
 }
@@ -39,28 +40,26 @@
     -fx-text-fill: black;
 }
 
-.table-view .column-header {
-    -fx-background-color: transparent;
-}
-
-.table-view .table-cell{
-    -fx-text-fill: white;
-}
-
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, transparent;
+    -fx-background-color: transparent;
+    -fx-table-cell-border-color, transparent;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
     -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    -fx-font-size: 16pt;
+    -fx-font-size: 14pt;
+
 }
 
+.table-view .table-cell {
+    -fx-text-fill: white;
+}
 
 .table-row-cell:selected {
     -fx-background-color: #939eaf;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
 }
+
 
 /*
     Buttons
@@ -70,18 +69,14 @@
     -fx-border-color: #16327a;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #08c;
+    -fx-background-color: #b4c1c6;
     -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: black;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
-}
-
-.background {
     -fx-background-color: white;
 }
 
