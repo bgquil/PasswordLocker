@@ -32,6 +32,10 @@ public class LockerController {
 
     private BooleanProperty credentialSelected;
 
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss" );
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime sixMonths = now.plusDays(-10);
+    LocalDateTime year = now.plusDays(-365);
 
      /*
     Begin FXML element declaration.
@@ -129,7 +133,7 @@ public class LockerController {
     }
 
     private void initDateFormatting(){
-        DateTimeFormatter myDateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss" );
+
 
         // Custom rendering of genCol containing the generation date LocalDateTime Object
         genCol.setCellFactory(column -> {
@@ -143,7 +147,7 @@ public class LockerController {
                         setStyle("");
                     } else {
                         // Format date.
-                        setText(myDateFormatter.format(item));
+                        setText(dateFormatter.format(item));
 
 
                     }
@@ -162,7 +166,7 @@ public class LockerController {
                         setStyle("");
                     } else {
                         // Format date.
-                        setText(myDateFormatter.format(item));
+                        setText(dateFormatter.format(item));
                     }
                 }
             };
@@ -175,13 +179,22 @@ public class LockerController {
     }
 
     private void handleDisplayPasswordInfoFromTable(int pwIndex){
+        changeField.setStyle("-fx-background-color: white;");
         Credential pw = passwordTable.getItems().get(pwIndex);
         svcField.setText(pw.getService());
         usrField.setText(pw.getUsername());
         pwArea.setText(pw.getPassword());
-        genField.setText(pw.getEditDate().toString());
-        changeField.setText(pw.getEditDate().toString());
+        genField.setText(dateFormatter.format(pw.getEditDate()));
+        changeField.setText(dateFormatter.format(pw.getEditDate()));
         noteArea.setText(pw.getNotes());
+
+        if (pw.getEditDate().isBefore(year)){
+            changeField.setStyle("-fx-background-color: red;");
+        }
+        else if (pw.getEditDate().isBefore(sixMonths)){
+            changeField.setStyle("-fx-background-color: orange;");
+        }
+
     }
 
 
