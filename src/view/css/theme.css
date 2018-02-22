@@ -42,7 +42,7 @@
 
 .table-row-cell{
     -fx-background-color: transparent;
-    -fx-table-cell-border-color, transparent;
+    -fx-table-cell-border-color: transparent;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
     -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
