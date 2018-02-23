@@ -189,10 +189,10 @@ public class LockerController {
         noteArea.setText(pw.getNotes());
 
         if (pw.getEditDate().isBefore(year)){
-            changeField.setStyle("-fx-background-color: red;");
+            changeField.setStyle("-fx-background-color: purple;");
         }
         else if (pw.getEditDate().isBefore(sixMonths)){
-            changeField.setStyle("-fx-background-color: orange;");
+            changeField.setStyle("-fx-background-color: yellow;");
         }
 
     }
