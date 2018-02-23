@@ -32,10 +32,10 @@ public class LockerController {
 
     private BooleanProperty credentialSelected;
 
-    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss" );
-    LocalDateTime now = LocalDateTime.now();
-    LocalDateTime sixMonths = now.plusDays(-10);
-    LocalDateTime year = now.plusDays(-365);
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss" );
+    private LocalDateTime now = LocalDateTime.now();
+    private LocalDateTime sixMonths = now.plusDays(-10);
+    private LocalDateTime year = now.plusDays(-365);
 
      /*
     Begin FXML element declaration.
@@ -187,14 +187,13 @@ public class LockerController {
         genField.setText(dateFormatter.format(pw.getEditDate()));
         changeField.setText(dateFormatter.format(pw.getEditDate()));
         noteArea.setText(pw.getNotes());
-
+        // Visual notification of old passwords.
         if (pw.getEditDate().isBefore(year)){
-            changeField.setStyle("-fx-background-color: purple;");
+            changeField.setStyle("-fx-text-box-border: red; -fx-text-fill: red;");
         }
         else if (pw.getEditDate().isBefore(sixMonths)){
-            changeField.setStyle("-fx-background-color: yellow;");
+            changeField.setStyle("-fx-text-box-border: yellow; -fx-text-fill: yellow;");
         }
-
     }
 
 
@@ -225,16 +224,20 @@ public class LockerController {
     private void closeLocker(){
         lockerPathLabel.setText("");
         passwordTable.getItems().clear();
+        clearCredentialDetailsArea();
+        saveFile();
+        Context.getInstance().clearContext();
+        mainApp.showRecentLocker();
+    }
 
+    @FXML
+    private void clearCredentialDetailsArea() {
         svcField.clear();
         usrField.clear();
         pwArea.clear();
         genField.clear();
         changeField.clear();
         noteArea.clear();
-        saveFile();
-        Context.getInstance().clearContext();
-        mainApp.showRecentLocker();
     }
 
     @FXML
@@ -242,8 +245,8 @@ public class LockerController {
 
         Credential selected = passwordTable.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Update");
-        alert.setContentText("Service: ID:"+selected.getService());
+        alert.setTitle("Confirm Update of " + selected.getService());
+        alert.setContentText("Confirm Changes");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             int index = passwordTable.getSelectionModel().getSelectedIndex();
@@ -256,6 +259,8 @@ public class LockerController {
                     noteArea.getText());
             saveFile();
             loadPasswords();
+            clearCredentialDetailsArea();
+            passwordTable.getSelectionModel().select(index);
         }
     }
 
@@ -272,11 +277,6 @@ public class LockerController {
             Context.getInstance().getLocker().removeCredential(index);
             loadPasswords();
         }
-        else{
-
-        }
-
-
     }
 
     @FXML
