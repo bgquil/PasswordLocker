@@ -148,8 +148,6 @@ public class LockerController {
                     } else {
                         // Format date.
                         setText(dateFormatter.format(item));
-
-
                     }
                 }
             };
@@ -167,6 +165,10 @@ public class LockerController {
                     } else {
                         // Format date.
                         setText(dateFormatter.format(item));
+                        if (item.isBefore(year))
+                            setStyle("-fx-background-color: red; -fx-text-fill: black;");
+                        else if(item.isBefore(sixMonths))
+                            setStyle("-fx-background-color: yellow; -fx-text-fill: black;");
                     }
                 }
             };
@@ -189,10 +191,10 @@ public class LockerController {
         noteArea.setText(pw.getNotes());
         // Visual notification of old passwords.
         if (pw.getEditDate().isBefore(year)){
-            changeField.setStyle("-fx-text-box-border: red; -fx-text-fill: red;");
+            changeField.setStyle("-fx-text-box-border: red; -fx-text-fill: black; -fx-background-color: red;");
         }
         else if (pw.getEditDate().isBefore(sixMonths)){
-            changeField.setStyle("-fx-text-box-border: yellow; -fx-text-fill: yellow;");
+            changeField.setStyle("-fx-text-box-border: yellow; -fx-text-fill: black; -fx-background-color: yellow;");
         }
     }
 
@@ -260,6 +262,7 @@ public class LockerController {
             saveFile();
             loadPasswords();
             clearCredentialDetailsArea();
+            //initDateFormatting();
             passwordTable.getSelectionModel().select(index);
         }
     }
