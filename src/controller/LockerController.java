@@ -165,6 +165,7 @@ public class LockerController {
                     } else {
                         // Format date.
                         setText(dateFormatter.format(item));
+                        // set color of password editCol cell if a password is old
                         if (item.isBefore(year))
                             setStyle("-fx-background-color: red; -fx-text-fill: black;");
                         else if(item.isBefore(sixMonths))
