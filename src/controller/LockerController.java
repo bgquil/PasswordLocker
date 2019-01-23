@@ -112,6 +112,7 @@ public class LockerController {
         genCol.setCellValueFactory(cellData -> cellData.getValue().generationDateProperty());
         editCol.setCellValueFactory(cellData -> cellData.getValue().editDateProperty());
 
+        editGrid.setVisible(false);
 
 
         //Listen for selections in passwordTable and show the selected item in the edit pane
@@ -121,6 +122,7 @@ public class LockerController {
                         passwordTable.getSelectionModel().getSelectedIndex()
                 );
                credentialSelected.setValue(true);
+               editGrid.setVisible(true);
             }
         });
     }
